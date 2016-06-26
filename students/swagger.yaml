@@ -1,0 +1,308 @@
+swagger: "2.0"
+info: 
+ version: "1.0.0"
+ title: "Weather API"
+ description: "A simple test API to get acquainted with Django REST framework."
+ termsOfService: "http://studetnsdb.com/service"
+ contact: 
+   name: "Adrian Yavorski"
+   email: "adrian.yavorski@gmail.com"
+   url: "http://swagger.io"
+ license: 
+   name: "MIT"
+   url: "http://opensource.org/licenses/MIT"
+host: "127.0.0.1:8000"
+schemes: 
+ - "http"
+consumes: 
+ - "application/json"
+produces: 
+ - "application/text"
+paths: 
+ /students: 
+   get: 
+     tags: 
+       - "List of students"
+     description: "gets a list of existing students"
+     operationId: "getStudents"
+     produces: 
+       - "text/html"
+       - "application/json"
+     parameters: 
+          - 
+            name: "group"
+            in: "query"
+            description: "ID of a group to receive students from"
+            required: false
+            type: "integer"
+            format: "int64"
+     responses: 
+       200: 
+         description: "students' list"
+       default: 
+         description: "unexpected error"
+   post:
+     tags: 
+       - "Create a student"
+     description: "Add new student to app"
+     operationId: "createStudent"
+     produces: 
+       - "text/html"
+       - "application/json"
+     parameters:
+       - 
+         name: "first_name"
+         in: "formData"
+         description: "First name"
+         required: true
+         type: "string"
+       - 
+         name: "last_name"
+         in: "formData"
+         description: "Last name"
+         required: true
+         type: "string"
+       -
+         name: "middle_name"
+         in: "formData"
+         description: "Middle name"
+         required: false
+         type: "string"
+       -
+         name: "student_group"
+         in: "formData"
+         description: "Student group"
+         required: false
+         type: "string"
+       -
+         name: "birthday"
+         in: "formData"
+         description: "Date of birth"
+         required: false
+         type: "string"
+       -
+         name: "ticket"
+         in: "formData"
+         description: "Ticket number"
+         required: true
+         type: "string"
+       -
+         name: "Notes"
+         in: "formData"
+         description: "Extra info about student"
+         required: false
+         type: "string"
+     responses: 
+       201: 
+         description: "student created"
+       400:
+         description: "invalid data or field is required"
+       default: 
+         description: "unexpected error"
+ /students/{id}: 
+      get: 
+        tags:
+          - "Student detail"
+        description: "Returns info about specific student"
+        operationId: "findStudentById"
+        produces: 
+          - "application/json"
+          - "text/html"
+        parameters: 
+          - 
+            name: "id"
+            in: "path"
+            description: "ID of student to get"
+            required: true
+            type: "integer"
+            format: "int64"
+        responses: 
+          200:
+            description: "Student info"
+          404:
+            description: "There is no student with such id"
+      delete:
+        tags:
+          - "Delete student"
+        description: "deletes a student from the app"
+        operationId: "deleteStudent"
+        produces: 
+          - "application/json"
+          - "text/html"
+        parameters: 
+          - 
+            name: "id"
+            in: "path"
+            description: "ID of student to delete"
+            required: true
+            type: "integer"
+            format: "int64"
+        responses: 
+          204:
+            description: "student deleted"
+          404:
+            description: "bad request(might be invalid id)"
+          default: 
+            description: "unexpected error"
+      put:
+        tags:
+          - "Update student"
+        description: "updates a student"
+        operationId: "updateStudent"
+        produces: 
+          - "application/json"
+          - "text/html"
+        parameters: 
+          - 
+            name: "id"
+            in: "path"
+            description: "ID of student to update"
+            required: true
+            type: "integer"
+            format: "int64"
+          - 
+            name: "first_name"
+            in: "formData"
+            description: "First name"
+            required: true
+            type: "string"
+          - 
+            name: "last_name"
+            in: "formData"
+            description: "Last name"
+            required: true
+            type: "string"
+          -
+            name: "middle_name"
+            in: "formData"
+            description: "Middle name"
+            required: false
+            type: "string"
+          -
+            name: "student_group"
+            in: "formData"
+            description: "Student group"
+            required: false
+            type: "string"
+          -
+            name: "birthday"
+            in: "formData"
+            description: "Date of birth"
+            required: false
+            type: "string"
+          -
+            name: "ticket"
+            in: "formData"
+            description: "Ticket number"
+            required: true
+            type: "string"
+          -
+            name: "Notes"
+            in: "formData"
+            description: "Extra info about student"
+            required: false
+            type: "string"
+        responses: 
+            204:
+              description: "student deleted"
+            404:
+              description: "bad request(might be invalid id)"
+            default: 
+              description: "unexpected error"
+      
+ /groups: 
+    get: 
+      tags: 
+        - "List of groups"
+      description: "gets a list of existing groups"
+      operationId: "getGroups"
+      produces: 
+        - "text/html"
+        - "application/json"
+      responses: 
+        200: 
+          description: "groups' list"
+        default: 
+          description: "unexpected error"
+    post:
+      tags: 
+        - "Create a group"
+      description: "Add new group to the app"
+      operationId: "createGroup"
+      produces: 
+        - "text/html"
+        - "application/json"
+      parameters:
+        - 
+          name: "title"
+          in: "formData"
+          description: "Title of a group"
+          required: true
+          type: "string"
+        - 
+          name: "leader"
+          in: "formData"
+          description: "Id of a leader for this a group. A leader can't be from the another group"
+          required: false
+          type: "integer"
+          format: "int64"
+        -
+          name: "notes"
+          in: "formData"
+          description: "Extra info about a group"
+          required: false
+          type: "string"
+      responses: 
+        201: 
+          description: "group created"
+        400:
+          description: "bad request(might be invalid leader)"
+        default: 
+          description: "unexpected error"
+ /groups/{id}: 
+      get: 
+        tags:
+          - "Group detail"
+        description: "Returns info about specific group"
+        operationId: "findGroupById"
+        produces: 
+          - "application/json"
+          - "text/html"
+        parameters: 
+          - 
+            name: "id"
+            in: "path"
+            description: "ID of group to get"
+            required: true
+            type: "integer"
+            format: "int64"
+        responses: 
+          200:
+            description: "Group info"
+          404:
+            description: "bad request(maybe there is no group with such id)"
+      delete: 
+        tags:
+          - "Delete a group"
+        description: "deletes a group"
+        operationId: "deleteGroup"
+        produces: 
+          - "application/json"
+          - "text/html"
+        parameters: 
+          - 
+            name: "id"
+            in: "path"
+            description: "ID of group to delete"
+            required: true
+            type: "integer"
+            format: "int64"
+        responses: 
+          204:
+            description: "group deleted"
+          404:
+            description: "bad request(some students might be still in a group)"
+          default: 
+            description: "unexpected error"
+      
+
