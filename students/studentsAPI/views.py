@@ -1,10 +1,10 @@
-from rest_framework import filters, viewsets, generics, status
 from rest_framework.response import Response
 from studentsAPI.models.students import Student
 from studentsAPI.models.groups import Group
 from django.db.models.deletion import ProtectedError
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
+from rest_framework import filters, viewsets, generics, status
 from studentsAPI.serializers import StudentSerializer, GroupSerializer
 
 
